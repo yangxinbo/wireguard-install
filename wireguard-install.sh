@@ -206,12 +206,19 @@ function installWireGuard() {
 		fi
 		installPackages dnf install -y wireguard-tools iptables qrencode
 	elif [[ ${OS} == 'centos' ]] || [[ ${OS} == 'almalinux' ]] || [[ ${OS} == 'rocky' ]] || [[ ${OS} == 'alinux' ]]; then
-		if [[ ${VERSION_ID} == 7* ]] || [[ ${VERSION_ID} == 8* ]]; then
+		if [[ ${VERSION_ID} == 7* ]]; then
+			installPackages yum install -y epel-release
+			installPackages yum install -y kernel-devel kernel-headers dkms gcc make
+			installPackages yum install -y wireguard-dkms
+			installPackages yum install -y wireguard-tools iptables
+		elif [[ ${VERSION_ID} == 8* ]]; then
 			installPackages yum install -y epel-release elrepo-release
 			installPackages yum install -y kmod-wireguard
 			yum install -y qrencode || true # not available on release 9
+			installPackages yum install -y wireguard-tools iptables
+		else
+			installPackages yum install -y wireguard-tools iptables
 		fi
-		installPackages yum install -y wireguard-tools iptables
 	elif [[ ${OS} == 'oracle' ]]; then
 		installPackages dnf install -y oraclelinux-developer-release-el8
 		dnf config-manager --disable -y ol8_developer
@@ -512,7 +519,9 @@ function uninstallWg() {
 			fi
 		elif [[ ${OS} == 'centos' ]] || [[ ${OS} == 'almalinux' ]] || [[ ${OS} == 'rocky' ]] || [[ ${OS} == 'alinux' ]]; then
 			yum remove -y --noautoremove wireguard-tools
-			if [[ ${VERSION_ID} == 7* ]] || [[ ${VERSION_ID} == 8* ]]; then
+			if [[ ${VERSION_ID} == 7* ]]; then
+				yum remove --noautoremove wireguard-dkms
+			elif [[ ${VERSION_ID} == 8* ]]; then
 				yum remove --noautoremove kmod-wireguard qrencode
 			fi
 		elif [[ ${OS} == 'oracle' ]]; then
