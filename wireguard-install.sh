@@ -63,7 +63,7 @@ function checkOS() {
 			echo "Your version of Fedora (${VERSION_ID}) is not supported. Please use Fedora 32 or later"
 			exit 1
 		fi
-	elif [[ ${OS} == 'centos' ]] || [[ ${OS} == 'almalinux' ]] || [[ ${OS} == 'rocky' ]]; then
+	elif [[ ${OS} == 'centos' ]] || [[ ${OS} == 'almalinux' ]] || [[ ${OS} == 'rocky' ]] || [[ ${OS} == 'alinux' ]]; then
 		if [[ ${VERSION_ID} == 7* ]]; then
 			echo "Your version of CentOS (${VERSION_ID}) is not supported. Please use CentOS 8 or later"
 			exit 1
@@ -81,7 +81,7 @@ function checkOS() {
 			fi
 		fi
 	else
-		echo "Looks like you aren't running this installer on a Debian, Ubuntu, Fedora, CentOS, AlmaLinux, Oracle or Arch Linux system"
+		echo "Looks like you aren't running this installer on a Debian, Ubuntu, Fedora, CentOS, AlmaLinux, Alibaba Cloud Linux, Oracle or Arch Linux system"
 		exit 1
 	fi
 }
@@ -208,7 +208,7 @@ function installWireGuard() {
 			installPackages dnf install -y wireguard-dkms
 		fi
 		installPackages dnf install -y wireguard-tools iptables qrencode
-	elif [[ ${OS} == 'centos' ]] || [[ ${OS} == 'almalinux' ]] || [[ ${OS} == 'rocky' ]]; then
+	elif [[ ${OS} == 'centos' ]] || [[ ${OS} == 'almalinux' ]] || [[ ${OS} == 'rocky' ]] || [[ ${OS} == 'alinux' ]]; then
 		if [[ ${VERSION_ID} == 8* ]]; then
 			installPackages yum install -y epel-release elrepo-release
 			installPackages yum install -y kmod-wireguard
@@ -513,7 +513,7 @@ function uninstallWg() {
 				dnf remove -y --noautoremove wireguard-dkms
 				dnf copr disable -y jdoss/wireguard
 			fi
-		elif [[ ${OS} == 'centos' ]] || [[ ${OS} == 'almalinux' ]] || [[ ${OS} == 'rocky' ]]; then
+		elif [[ ${OS} == 'centos' ]] || [[ ${OS} == 'almalinux' ]] || [[ ${OS} == 'rocky' ]] || [[ ${OS} == 'alinux' ]]; then
 			yum remove -y --noautoremove wireguard-tools
 			if [[ ${VERSION_ID} == 8* ]]; then
 				yum remove --noautoremove kmod-wireguard qrencode
