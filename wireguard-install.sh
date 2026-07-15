@@ -64,10 +64,6 @@ function checkOS() {
 			exit 1
 		fi
 	elif [[ ${OS} == 'centos' ]] || [[ ${OS} == 'almalinux' ]] || [[ ${OS} == 'rocky' ]] || [[ ${OS} == 'alinux' ]]; then
-		if [[ ${VERSION_ID} == 7* ]]; then
-			echo "Your version of CentOS (${VERSION_ID}) is not supported. Please use CentOS 8 or later"
-			exit 1
-		fi
 	elif [[ -e /etc/oracle-release ]]; then
 		source /etc/os-release
 		OS=oracle
@@ -209,7 +205,7 @@ function installWireGuard() {
 		fi
 		installPackages dnf install -y wireguard-tools iptables qrencode
 	elif [[ ${OS} == 'centos' ]] || [[ ${OS} == 'almalinux' ]] || [[ ${OS} == 'rocky' ]] || [[ ${OS} == 'alinux' ]]; then
-		if [[ ${VERSION_ID} == 8* ]]; then
+		if [[ ${VERSION_ID} == 7* ]] || [[ ${VERSION_ID} == 8* ]]; then
 			installPackages yum install -y epel-release elrepo-release
 			installPackages yum install -y kmod-wireguard
 			yum install -y qrencode || true # not available on release 9
@@ -515,7 +511,7 @@ function uninstallWg() {
 			fi
 		elif [[ ${OS} == 'centos' ]] || [[ ${OS} == 'almalinux' ]] || [[ ${OS} == 'rocky' ]] || [[ ${OS} == 'alinux' ]]; then
 			yum remove -y --noautoremove wireguard-tools
-			if [[ ${VERSION_ID} == 8* ]]; then
+			if [[ ${VERSION_ID} == 7* ]] || [[ ${VERSION_ID} == 8* ]]; then
 				yum remove --noautoremove kmod-wireguard qrencode
 			fi
 		elif [[ ${OS} == 'oracle' ]]; then
