@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sed -n '205,230p' wireguard-install.sh)",
+      "Bash(bash -n wireguard-install.sh)"
+    ]
+  }
+}
