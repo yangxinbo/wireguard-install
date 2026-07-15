@@ -208,7 +208,9 @@ function installWireGuard() {
 	elif [[ ${OS} == 'centos' ]] || [[ ${OS} == 'almalinux' ]] || [[ ${OS} == 'rocky' ]] || [[ ${OS} == 'alinux' ]]; then
 		if [[ ${VERSION_ID} == 7* ]]; then
 			installPackages yum install -y epel-release
-			installPackages yum install -y kernel-devel kernel-headers dkms gcc make
+			rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+			installPackages yum install -y https://www.elrepo.org/elrepo-release-7.el7.elrepo.noarch.rpm
+			installPackages yum install -y kernel-devel-$(uname -r) kernel-headers-$(uname -r) dkms gcc make
 			installPackages yum install -y wireguard-dkms
 			installPackages yum install -y wireguard-tools iptables
 		elif [[ ${VERSION_ID} == 8* ]]; then
