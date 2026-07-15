@@ -20,7 +20,8 @@ Supported distributions:
 - Alibaba Cloud Linux >= 3
 - Alpine Linux
 - Arch Linux
-- CentOS >= 7
+- Amazon Linux 2
+- CentOS >= 8
 - Debian >= 10
 - Fedora >= 32
 - Oracle Linux
